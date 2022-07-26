@@ -10,6 +10,13 @@ config_path = f"{os.path.expanduser('~/.templater')}"
 
 # cli commands
 @app.command()
+def gen():
+  """
+  Generates file(s) from templates
+  """
+  raise NotImplementedError
+
+@app.command()
 def list():
   """
   List current current templates
@@ -31,6 +38,9 @@ def add(name: str = typer.Argument(..., help="template name"), path: str = typer
     print(f"[bold red]\"{name}\" Template already exists")
     return 
 
+  new_path = os.path.join(config_path, name)
+  os.makedirs(new_path)
+  os.popen(f"cp -r {path} {new_path}/{name}")
   template = {
     "name": name,
     "created": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
