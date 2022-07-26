@@ -10,11 +10,19 @@ config_path = f"{os.path.expanduser('~/.templater')}"
 
 # cli commands
 @app.command()
-def gen():
+def gen(name: str = typer.Argument(..., help="template name")):
   """
   Generates file(s) from templates
   """
-  raise NotImplementedError
+  config = load()
+  if name not in [t["name"] for t in config["templates"]]:
+    print(f"[bold red]\"{name}\" Template does not exist")
+    return 
+
+  template = [t for t in config["templates"] if t["name"] == name][0]
+  ori_path = os.path.join(template["path"], "*")
+  os.popen(f"cp -r {ori_path} .")
+  print(f"[bold blue]Successfully generated {name}")
 
 @app.command()
 def list():
@@ -40,21 +48,30 @@ def add(name: str = typer.Argument(..., help="template name"), path: str = typer
 
   new_path = os.path.join(config_path, name)
   os.makedirs(new_path)
-  os.popen(f"cp -r {path} {new_path}/{name}")
+  os.popen(f"cp -r {path} {new_path}/{path}")
   template = {
     "name": name,
-    "created": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    "created": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+    "path": new_path
   }
   config["templates"].append(template)
   save(config)
   print(f"[bold green] Added template {name}")
 
 @app.command()
-def delete():
+def rm(name: str = typer.Argument(..., help="template name")):
   """
   Delete a template
   """
-  raise NotImplementedError
+  config = load()
+  template = [t for t in config["templates"] if t["name"] == name]
+  assert len(template) == 1, f"[bold red]\"{name}\" Template does not exist"
+
+  path = template[0]["path"]
+  os.popen(f"rm -rf {path}")
+  config["templates"].remove(template[0])
+  save(config)
+  print(f"[bold green] Deleted template {name}")
 
 
 # utility functions
@@ -77,6 +94,7 @@ def save(config):
   path = os.path.join(config_path, 'config.json')
   with open(path, 'w') as f:
     json.dump(config, f)
+
 
 if __name__ == "__main__":
   app()
