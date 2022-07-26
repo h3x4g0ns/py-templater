@@ -78,6 +78,5 @@ def save(config):
   with open(path, 'w') as f:
     json.dump(config, f)
 
-
 if __name__ == "__main__":
   app()
