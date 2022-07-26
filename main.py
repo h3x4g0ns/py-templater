@@ -27,6 +27,10 @@ def add(name: str = typer.Argument(..., help="template name"), path: str = typer
   Add a new template
   """
   config = load()
+  if name in [t["name"] for t in config["templates"]]:
+    print(f"[bold red]\"{name}\" Template already exists")
+    return 
+
   template = {
     "name": name,
     "created": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
