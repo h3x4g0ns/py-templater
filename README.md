@@ -23,10 +23,9 @@ pip install py-templater typer rich
 ### Usage
 
 ```sh
-py-templater on  master
-╰─ templater --help
+templater --help
                                                                                                                    
- Usage: templater [OPTIONS] COMMAND [ARGS]...                                                                      
+  Usage: templater [OPTIONS] COMMAND [ARGS]...                                                                      
                                                                                                                    
 Options
   --install-completion          Install completion for the current shell.                                        
@@ -43,7 +42,9 @@ Commands
 #### `add`
 
 ```sh
-Usage: templater add [OPTIONS] NAME PATH
+templater add --help
+
+  Usage: templater add [OPTIONS] NAME PATH
 
 Arguments
   name      template name
