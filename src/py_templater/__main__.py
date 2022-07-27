@@ -37,7 +37,7 @@ def list():
 
 
 @app.command()
-def add(name: str = typer.Argument(..., help="template name"), path: str = typer.Argument(..., help="path to file/directory")):
+def add(name: str = typer.Argument(..., help="template name"), path: str = typer.Argument(..., help="path to original file/directory")):
   """
   Add a new template
   """
