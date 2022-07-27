@@ -1,7 +1,7 @@
 # py-templater
 
-![pypi build](https://img.shields.io/github/workflow/status/h3x4g0ns/py-test/pypi-build)
-[![PyPI version](https://badge.fury.io/py/py-templater.svg)](https://badge.fury.io/py/py-test)
+![pypi build](https://img.shields.io/github/workflow/status/h3x4g0ns/py-templater/python-publish)
+[![PyPI version](https://badge.fury.io/py/py-templater.svg)](https://badge.fury.io/py/py-templater)
 
 ## About this Project
 
