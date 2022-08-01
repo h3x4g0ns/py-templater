@@ -41,6 +41,8 @@ Commands
 
 #### `add`
 
+Allows user to define a file/directory as new template
+
 ```sh
 templater add --help
 
@@ -51,3 +53,35 @@ Arguments
   path      path to original file/directory
 ```
 
+#### `gen`
+
+Generates any user defined templates in the current working directory
+
+```sh
+templater gen --help
+
+  Usage: templater gen [OPTIONS] NAME
+
+Arguments
+  name      template name
+```
+
+#### `list`
+
+Lists all user-defined templates and corresponding metadata
+
+```sh
+templater list --help
+  
+  Usage: templater list [OPTIONS]
+```
+
+#### `rm`
+
+Allows user to delete any user-defined templates
+
+```sh
+templater rm --help
+
+  Usage: templater rm [OPTIONS]
+```
