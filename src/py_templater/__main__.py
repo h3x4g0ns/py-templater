@@ -89,18 +89,16 @@ def view(name: str = typer.Argument(..., help="template name"), n: int = typer.A
   assert len(template) == 1, f"[bold red]\"{name}\" Template does not exist"
 
   path = template[0]["path"]
-  files = []
+  files, content = [], []
   for (_, _, filenames) in walk(path):
       files.extend(filenames)
-
-  content = []
   new_path = os.path.join(path, files[0])
   with open(new_path) as f:
     for _ in range(n):
       content.append(f.readline())
   name = template[0]["name"]
-  print(f"\n[bold blue]{name} contents:")
   _, ext = os.path.splitext(new_path)
+  print(f"\n[bold blue]{name} contents:")
   print(Syntax("".join(content), ext[1:], theme="gruvbox-dark", line_numbers=True))
 
 
