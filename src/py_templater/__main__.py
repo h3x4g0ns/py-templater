@@ -101,7 +101,7 @@ def view(name: str = typer.Argument(..., help="template name"), n: int = typer.A
   name = template[0]["name"]
   print(f"\n[bold blue]{name} contents:")
   _, ext = os.path.splitext(new_path)
-  print(Syntax("".join(content), ext[1:], line_numbers=True))
+  print(Syntax("".join(content), ext[1:], theme="gruvbox-dark", line_numbers=True))
 
 
 # utility functions
