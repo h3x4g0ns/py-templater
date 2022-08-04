@@ -37,6 +37,7 @@ Commands
   gen       Generates file(s) from templates
   list      List current current templates
   rm        Delete a template
+  view      View template head
 ```
 
 #### `add`
