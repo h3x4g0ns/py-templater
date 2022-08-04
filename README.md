@@ -85,3 +85,16 @@ templater rm --help
 
   Usage: templater rm [OPTIONS]
 ```
+
+#### `view`
+
+Views head snippet of template
+
+```sh
+templater view --help
+
+  Usage: templater view [OPTIONS] NAME [N]
+
+Arguments
+  name      template name
+  n         (default: 5) numbers of lines to show
