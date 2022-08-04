@@ -1,12 +1,14 @@
 import typer, os, json
 from rich import print
 from rich.table import Table
+from rich.syntax import Syntax
 from datetime import datetime
+from os import walk
+from itertools import islice
 
 # initialize config
 app = typer.Typer()
 config_path = f"{os.path.expanduser('~/.templater')}"
-
 
 # cli commands
 @app.command()
@@ -23,6 +25,7 @@ def gen(name: str = typer.Argument(..., help="template name")):
   ori_path = os.path.join(template["path"], "*")
   os.popen(f"cp -r {ori_path} .")
   print(f"[bold blue]Successfully generated {name}")
+
 
 @app.command()
 def list():
@@ -58,6 +61,7 @@ def add(name: str = typer.Argument(..., help="template name"), path: str = typer
   save(config)
   print(f"[bold green] Added template {name}")
 
+
 @app.command()
 def rm(name: str = typer.Argument(..., help="template name")):
   """
@@ -72,6 +76,30 @@ def rm(name: str = typer.Argument(..., help="template name")):
   config["templates"].remove(template[0])
   save(config)
   print(f"[bold green] Deleted template {name}")
+
+
+@app.command()
+def view(name: str = typer.Argument(..., help="template name"), n: int = typer.Argument(5, help="lines of code to view")):
+  """
+  View snippet of template
+  """
+  config = load()
+  template = [t for t in config["templates"] if t["name"] == name]
+  assert len(template) == 1, f"[bold red]\"{name}\" Template does not exist"
+
+  path = template[0]["path"]
+  files = []
+  for (_, _, filenames) in walk(path):
+      files.extend(filenames)
+
+  content = []
+  new_path = os.path.join(path, files[0])
+  with open(new_path) as f:
+    for _ in range(n):
+      content.append(f.readline())
+  name = template[0]["name"]
+  print(f"\n[bold blue]{name} contents:")
+  print(Syntax("".join(content), "python", line_numbers=True))
 
 
 # utility functions
@@ -94,6 +122,9 @@ def save(config):
   path = os.path.join(config_path, 'config.json')
   with open(path, 'w') as f:
     json.dump(config, f)
+
+def _sync(config):
+  pass
 
 
 if __name__ == "__main__":
