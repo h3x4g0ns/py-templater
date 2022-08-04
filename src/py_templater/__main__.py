@@ -1,3 +1,4 @@
+from platform import python_branch
 import typer, os, json
 from rich import print
 from rich.table import Table
@@ -99,7 +100,8 @@ def view(name: str = typer.Argument(..., help="template name"), n: int = typer.A
       content.append(f.readline())
   name = template[0]["name"]
   print(f"\n[bold blue]{name} contents:")
-  print(Syntax("".join(content), "python", line_numbers=True))
+  _, ext = os.path.splitext(new_path)
+  print(Syntax("".join(content), ext[1:], line_numbers=True))
 
 
 # utility functions
