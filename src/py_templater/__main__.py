@@ -50,6 +50,10 @@ def add(name: str = typer.Argument(..., help="template name"), path: str = typer
     print(f"[bold red]\"{name}\" Template already exists")
     return 
 
+  if not os.path.exists(os.path.join(os.getcwd(), path)):
+    print(f"[bold red]\"{path}\" does not exist")
+    return 
+    
   new_path = os.path.join(config_path, name)
   os.makedirs(new_path)
   os.popen(f"cp -r {path} {new_path}/{path}")
